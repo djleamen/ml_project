@@ -1,3 +1,9 @@
+'''
+Simple LASSO Regression Example: 
+Predicting Student Pass/Fail Based on Study Hours and Previous Exam Scores
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+'''
+
 import pandas as pd
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import train_test_split
@@ -42,5 +48,3 @@ for alpha in [0.01, 0.05, 0.1, 0.5, 1.0]:
     y_pred = lasso_model.predict(X_test)
     r2 = r2_score(y_test, y_pred)
     print(f'Alpha: {alpha}, R-squared score: {r2}, Coefficients: {lasso_model.coef_}')
-    
-    

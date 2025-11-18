@@ -1,11 +1,17 @@
+'''
+Simple Decision Tree Classifier Example: 
+Predicting Student Pass/Fail Based on Study Hours and Previous Exam Scores
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+'''
+
+import matplotlib.pyplot as plt
 # Import necessary libraries
-import numpy as np
 import pandas as pd
+from sklearn import tree
+from sklearn.metrics import (accuracy_score, classification_report,
+                             confusion_matrix)
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-import matplotlib.pyplot as plt
-from sklearn import tree
 
 # Sample dataset: Study hours, previous exam scores, and pass/fail labels
 data = {
@@ -25,7 +31,8 @@ X = df[['StudyHours', 'PrevExamScore']]  # Features
 y = df['Pass']                           # Target variable (0 = Fail, 1 = Pass)
 
 # Split data into 80% training and 20% testing
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42)
 
 # Display the shape of the training and testing sets
 print(f"Training data: {X_train.shape}, {y_train.shape}")
@@ -65,8 +72,9 @@ print("Classification Report:")
 print(class_report)
 
 # Visualize the decision tree
-plt.figure(figsize=(12,8))
-tree.plot_tree(model, feature_names=['StudyHours', 'PrevExamScore'], class_names=['Fail', 'Pass'], filled=True)
+plt.figure(figsize=(12, 8))
+tree.plot_tree(model, feature_names=['StudyHours', 'PrevExamScore'], class_names=[
+               'Fail', 'Pass'], filled=True)
 plt.title('Decision Tree for Classifying Pass/Fail')
 plt.show()
 

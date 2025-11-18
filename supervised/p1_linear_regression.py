@@ -1,6 +1,9 @@
-# Import necessary libraries
+'''
+Simple Linear Regression Example: Predicting House Prices Based on Square Footage
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+'''
 
-import numpy as np
+# Import necessary libraries
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression

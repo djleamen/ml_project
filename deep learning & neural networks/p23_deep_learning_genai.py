@@ -1,14 +1,18 @@
-import tensorflow as tf
-from tensorflow.keras import layers, models
+'''
+Deep Learning and Generative AI with Autoencoders and GANs
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+'''
+
+from keras import layers, models, datasets
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Load MNIST dataset
-(X_train, _), (X_test, _) = tf.keras.datasets.mnist.load_data()
+(X_train, _), (X_test, _) = datasets.mnist.load_data()
 
 # Normalize and flatten images
-X_train = X_train.astype('float32') / 255.
-X_test = X_test.astype('float32') / 255.
+X_train = np.array(X_train).astype('float32') / 255.
+X_test = np.array(X_test).astype('float32') / 255.
 X_train = X_train.reshape((len(X_train), np.prod(X_train.shape[1:])))
 X_test = X_test.reshape((len(X_test), np.prod(X_test.shape[1:])))
 
@@ -42,6 +46,7 @@ print(f'Autoencoder Reconstruction MSE: {mse}')
 
 # Define the generator
 def build_generator():
+    """Builds the generator model for GAN."""
     model = models.Sequential([
         layers.Dense(128, activation='relu', input_shape=(100,)),
         layers.Dense(784, activation='sigmoid')  # Output: 28x28 flattened image
@@ -50,6 +55,7 @@ def build_generator():
 
 # Define the discriminator
 def build_discriminator():
+    """Builds the discriminator model for GAN."""
     model = models.Sequential([
         layers.Dense(128, activation='relu', input_shape=(784,)),
         layers.Dense(1, activation='sigmoid')  # Output: Probability (real or fake)
@@ -67,28 +73,28 @@ discriminator.trainable = False
 gan.compile(optimizer='adam', loss='binary_crossentropy')
 
 # Training GAN
-epochs = 10000
-batch_size = 64
-half_batch = batch_size // 2
+EPOCHS = 10000
+BATCH_SIZE = 64
+HALF_BATCH = BATCH_SIZE // 2
 
-for epoch in range(epochs):
+for epoch in range(EPOCHS):
     # Real images
-    idx = np.random.randint(0, X_train.shape[0], half_batch)
+    idx = np.random.randint(0, X_train.shape[0], HALF_BATCH)
     real_images = X_train[idx]
-    real_labels = np.ones((half_batch, 1))
+    real_labels = np.ones((HALF_BATCH, 1))
 
     # Fake images
-    noise = np.random.normal(0, 1, (half_batch, 100))
+    noise = np.random.normal(0, 1, (HALF_BATCH, 100))
     fake_images = generator.predict(noise)
-    fake_labels = np.zeros((half_batch, 1))
+    fake_labels = np.zeros((HALF_BATCH, 1))
 
     # Train the discriminator
     d_loss_real = discriminator.train_on_batch(real_images, real_labels)
     d_loss_fake = discriminator.train_on_batch(fake_images, fake_labels)
 
     # Train the generator (via GAN model)
-    noise = np.random.normal(0, 1, (batch_size, 100))
-    gan_labels = np.ones((batch_size, 1))  # Try to fool the discriminator
+    noise = np.random.normal(0, 1, (BATCH_SIZE, 100))
+    gan_labels = np.ones((BATCH_SIZE, 1))  # Try to fool the discriminator
     g_loss = gan.train_on_batch(noise, gan_labels)
 
     # Every 1000 epochs, print losses and visualize generated images

@@ -1,4 +1,15 @@
+"""
+Azure Machine Learning Neural Networks Example
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+"""
+
 from azureml.core import Workspace
+from azureml.core import Model
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import datasets, transforms
+
 
 # Create or retrieve an existing Azure ML workspace
 ws = Workspace.get(name='myworkspace',
@@ -14,12 +25,9 @@ ws = Workspace.create(name='myworkspace',
 # Write configuration to the workspace config file
 ws.write_config(path='.azureml')
 
-import torch
-import torch.nn as nn
-import torch.optim as optim
-
 # Define a simple neural network with one hidden layer
 class SimpleNN(nn.Module):
+    """A simple feedforward neural network with one hidden layer."""
     def __init__(self):
         super(SimpleNN, self).__init__()
         self.fc1 = nn.Linear(784, 128)  # Input layer (784 input features)
@@ -27,6 +35,7 @@ class SimpleNN(nn.Module):
         self.relu = nn.ReLU()           # Activation function
 
     def forward(self, x):
+        """Forward pass of the neural network."""
         x = self.relu(self.fc1(x))  # Apply ReLU after the first layer
         x = self.fc2(x)             # Output layer
         return x
@@ -38,8 +47,6 @@ model = SimpleNN()
 criterion = nn.CrossEntropyLoss()  # For classification tasks
 optimizer = optim.SGD(model.parameters(), lr=0.01)  # Stochastic Gradient Descent
 
-from torchvision import datasets, transforms
-
 # Load MNIST dataset
 train_loader = torch.utils.data.DataLoader(
     datasets.MNIST(root='data', train=True, download=True,
@@ -47,9 +54,9 @@ train_loader = torch.utils.data.DataLoader(
     batch_size=32, shuffle=True)
 
 # Train the model
-num_epochs = 5
-for epoch in range(num_epochs):
-    running_loss = 0.0
+NUM_EPOCHS = 5
+for epoch in range(NUM_EPOCHS):
+    RUNNING_LOSS = 0.0
     for inputs, labels in train_loader:
         optimizer.zero_grad()  # Reset gradients
 
@@ -61,11 +68,9 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
 
-        running_loss += loss.item()
+        RUNNING_LOSS += loss.item()
 
-    print(f"Epoch {epoch+1}, Loss: {running_loss/len(train_loader)}")
-    
-from azureml.core import Model
+    print(f"Epoch {epoch+1}, Loss: {RUNNING_LOSS/len(train_loader)}")
 
 # Save the trained model
 torch.save(model.state_dict(), 'simple_nn.pth')

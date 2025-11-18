@@ -1,9 +1,16 @@
+'''
+Simple Metrics Calculation and Cross-Validation Example: 
+Evaluating Classification and Regression Models
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+'''
+
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, r2_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.model_selection import cross_validate
+from sklearn.linear_model import LinearRegression
 
 # Sample dataset: Study hours, previous exam scores, and pass/fail labels
 data = {
@@ -17,8 +24,6 @@ df = pd.DataFrame(data)
 # Features and target variable
 X = df[['StudyHours', 'PrevExamScore']]
 y = df['Pass']
-
-from sklearn.linear_model import LogisticRegression
 
 # Split the data into training and testing sets (80% training, 20% testing)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -41,8 +46,6 @@ print(f'Precision: {precision}')
 print(f'Recall: {recall}')
 print(f'F1-Score: {f1}')
 
-from sklearn.model_selection import cross_val_score
-
 # Initialize the model
 model = LogisticRegression()
 
@@ -52,9 +55,6 @@ cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
 # Display the accuracy for each fold and the mean accuracy
 print(f'Cross-validation accuracies: {cv_scores}')
 print(f'Mean cross-validation accuracy: {np.mean(cv_scores)}')
-
-
-from sklearn.model_selection import cross_validate
 
 # Define multiple scoring metrics
 scoring = ['accuracy', 'precision', 'recall', 'f1']
@@ -68,9 +68,6 @@ print(f"Cross-validation Precision: {np.mean(cv_results['test_precision'])}")
 print(f"Cross-validation Recall: {np.mean(cv_results['test_recall'])}")
 print(f"Cross-validation F1-Score: {np.mean(cv_results['test_f1'])}")
 
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-
 # Sample dataset for regression
 X_reg = df[['StudyHours']]
 y_reg = df['PrevExamScore']
@@ -83,4 +80,3 @@ cv_scores_r2 = cross_val_score(reg_model, X_reg, y_reg, cv=5, scoring='r2')
 
 print(f'Cross-validation R-squared scores: {cv_scores_r2}')
 print(f'Mean R-squared score: {np.mean(cv_scores_r2)}')
-

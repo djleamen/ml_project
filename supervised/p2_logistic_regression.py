@@ -1,3 +1,8 @@
+'''
+Simple Logistic Regression Example: Predicting Student Pass/Fail Based on Study Hours
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+'''
+
 # Import necessary libraries
 import numpy as np
 import pandas as pd

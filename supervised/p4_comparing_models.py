@@ -1,12 +1,17 @@
-# Import libraries
-import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+'''
+Simple Comparison of Logistic Regression and Decision Tree Classifier on Student Pass/Fail Dataset
+From AI and Machine Learning Algorithms and Techniques by Microsoft on Coursera
+'''
+
 import matplotlib.pyplot as plt
+# Import libraries
+import pandas as pd
 from sklearn import tree
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (accuracy_score, classification_report,
+                             confusion_matrix)
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
 
 # Sample dataset: Study hours, previous exam scores, and pass/fail labels
 data = {
@@ -26,7 +31,8 @@ X = df[['StudyHours', 'PrevExamScore']]  # Features
 y = df['Pass']  # Target variable (0 = Fail, 1 = Pass)
 
 # Split data into 80% training and 20% testing
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42)
 
 print(f"Training data: {X_train.shape}, {y_train.shape}")
 print(f"Testing data: {X_test.shape}, {y_test.shape}")
@@ -74,9 +80,8 @@ print("Classification Report:")
 print(classification_report(y_test, y_pred_tree))
 
 # Visualize the decision tree
-plt.figure(figsize=(12,8))
-tree.plot_tree(tree_model, feature_names=['StudyHours', 'PrevExamScore'], class_names=['Fail', 'Pass'], filled=True)
+plt.figure(figsize=(12, 8))
+tree.plot_tree(tree_model, feature_names=[
+               'StudyHours', 'PrevExamScore'], class_names=['Fail', 'Pass'], filled=True)
 plt.title('Decision Tree for Classifying Pass/Fail')
 plt.show()
-
-
