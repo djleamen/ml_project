@@ -1,6 +1,6 @@
 # Machine Learning Project
 
-This repository contains coursework from **AI and Machine Learning Algorithms and Techniques** by Microsoft on Coursera. The projects cover fundamental and advanced machine learning concepts across supervised learning, unsupervised learning, reinforcement learning, and deep learning.
+This repository contains coursework from **AI and Machine Learning Algorithms and Techniques** and **Advanced AI and Machine Learning Techniques and Capstone** by Microsoft on Coursera. The projects cover fundamental and advanced machine learning concepts across supervised learning, unsupervised learning, reinforcement learning, and deep learning.
 
 ## Course Structure
 
@@ -44,6 +44,10 @@ This repository contains coursework from **AI and Machine Learning Algorithms an
 ## Dataset
 
 The `data/` directory contains the CIFAR-10 dataset used for image classification tasks in the deep learning modules.
+
+## Transfer Learning
+
+**transfer.py** - Advanced transfer learning implementation using MobileNetV2 for CIFAR-10 image classification
 
 ## Technologies Used
 
